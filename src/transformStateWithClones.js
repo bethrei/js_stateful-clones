@@ -12,24 +12,29 @@ function transformStateWithClones(state, actions) {
 
   for (const action of actions) {
     const { type, extraData, keysToRemove } = action;
-    const newObj = {};
+    const nextStateObj = {};
 
     switch (type) {
       case 'addProperties': {
-        Object.assign(newObj, previousState, extraData);
+        Object.assign(nextStateObj, previousState, extraData);
         break;
       }
 
       case 'removeProperties': {
-        Object.assign(newObj, previousState);
+        Object.assign(nextStateObj, previousState);
 
         for (const key of keysToRemove) {
-          delete newObj[key];
+          delete nextStateObj[key];
         }
         break;
       }
+      case 'clear':
+        break;
+
+      default:
+        return 'Error: unsupported type of action';
     }
-    states.push(newObj);
+    states.push(nextStateObj);
     previousState = states[states.length - 1];
   }
 
