@@ -32,7 +32,7 @@ function transformStateWithClones(state, actions) {
         break;
 
       default:
-        return 'Error: unsupported type of action';
+        throw new Error('unsupported type of action');
     }
     states.push(nextStateObj);
     previousState = states[states.length - 1];
